@@ -27,24 +27,28 @@ class LFU:
         if self.current_cache == self.cache_limit:
 
             # Remove the LFU + LRU
+            self.dictionary.pop(self.frequency['start'].val['end'].val)
             if self.frequency['start'].val['start'] == self.frequency['start'].val['end']:
                 self.frequency['start'] = self.frequency['start'].right
                 self.frequency['start'].left = None
             else:
                 if self.frequency['start'].val['end'].left is not None:
+                    print("INSIDE")
                     self.frequency['start'].val['end'].left.right = None
                 self.frequency['start'].val['end'] = self.frequency['start'].val['end'].left
+
                 if self.frequency['start'].val['end'] is None:
                     self.frequency['start'] = self.frequency['start'].right
                     if self.frequency['start'] is not None:
                         self.frequency['start'].left = None
+
             self.current_cache -= 1
 
         ref = Node(key)
         if not self.frequency or self.frequency['start'] is None:
             self.frequency['start'] = Node(val={'freq': 0, 'start': ref, 'end': ref},
-                                                                   left=None,
-                                                                   right=self.frequency['start'] if self.frequency else None)
+                                           left=None,
+                                           right=self.frequency['start'] if self.frequency else None)
             if self.frequency['end'] is None:
                 self.frequency['end'] = self.frequency['start']
             if self.frequency['start'].right is not None:
@@ -94,6 +98,8 @@ class LFU:
             # Assign this node as the start of the next freq
             item['node_loc'].right = freq_node.val['start']
             freq_node.val['start'] = item['node_loc']
+            if item['node_loc'].right is not None:
+                item['node_loc'].right.left = item['node_loc']
 
             # Delete freq if it is empty
             if item['freq_loc'].val['start'] is None:
@@ -113,31 +119,45 @@ class LFU:
             return None
 
     def print_info(self):
+        print('-----')
         print("DICTIONARY : {}".format({key: value['value'] for key, value in self.dictionary.items()}))
         freq_node = self.frequency['start']
         while freq_node is not None:
-            print("FREQ: {} | ".format(freq_node.val['freq']), end="")
+            print("FREQ: {}".format(freq_node.val['freq']))
             node = freq_node.val['start']
+            print('FORWARD : ', end="")
             while node is not None:
                 print("{} -> ".format(node.val), end="")
                 node = node.right
             print("None")
+            node = freq_node.val['end']
+            print("BACKWARD: None", end="")
+            while node is not None:
+                print(" <- {}".format(node.val), end="")
+                node = node.left
+            print()
             freq_node = freq_node.right
+        print('-----')
 
 
 if __name__ == "__main__":
     cache = LFU(cache_limit=2)
     cache.set(1, "Hitesh")
-    cache.print_info()
     cache.set(2, "Vivek")
-    cache.print_info()
+    #cache.print_info()
     print("ACCESS {}: {}".format(1, cache.get(1)))
-    cache.print_info()
+    #cache.print_info()
     print("ACCESS {}: {}".format(1, cache.get(1)))
-    cache.print_info()
+    #cache.print_info()
     print("ACCESS {}: {}".format(2, cache.get(2)))
-    cache.print_info()
+    #cache.print_info()
     print("ACCESS {}: {}".format(2, cache.get(2)))
     cache.print_info()
     cache.set(3, "Vinay")
+    print("ACCESS {}: {}".format(3, cache.get(3)))
+    print("ACCESS {}: {}".format(3, cache.get(3)))
+    print("ACCESS {}: {}".format(3, cache.get(3)))
+    print("ACCESS {}: {}".format(3, cache.get(3)))
+    cache.set(4, "Geetha")
     cache.print_info()
+
