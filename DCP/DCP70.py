@@ -18,8 +18,6 @@ def perfect_number(n: int) -> int:
             i *= 10
 
         remaining_digit = ((num // (i // 10)) % 10) - 1
-        #print("reminaing_digit: {}".format(remaining_digit))
-
         num = ((num // i) + 1) * i + remaining_digit
 
         if len(str(num)) > digit_len:
