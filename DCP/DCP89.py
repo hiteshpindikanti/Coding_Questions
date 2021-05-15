@@ -14,30 +14,32 @@ class Node:
         self.right = right
 
 
+# RUN INORDER TRAVERSAL
 def is_valid(root: Node) -> bool:
-    stack = [root]
-    while stack:
-        node = stack.pop(-1)
-        if node.left is not None:
-            if node.left.val > node.val:
-                return False
-            else:
-                stack.append(node.left)
-        if node.right is not None:
-            if node.right.val < node.val:
-                return False
-            else:
-                stack.append(node.right)
-
-    return True
+    # stack = [root]
+    # while stack:
+    #     # node = stack.pop(-1)
+    #     # if node.left is not None:
+    #     #     if node.left.val > node.val:
+    #     #         return False
+    #     #     else:
+    #     #         stack.append(node.left)
+    #     # if node.right is not None:
+    #     #     if node.right.val < node.val:
+    #     #         return False
+    #     #     else:
+    #     #         stack.append(node.right)
+    #
+    # return True
+    pass
 
 
 tree1 = Node(val=5,
-            left=Node(val=3,
-                      left=Node(val=1)),
-            right=Node(val=8,
-                       left=Node(val=7,
-                                 left=Node(6))))
+             left=Node(val=3,
+                       left=Node(val=1)),
+             right=Node(val=8,
+                        left=Node(val=7,
+                                  left=Node(6))))
 
 tree2 = Node(val=6,
              left=Node(10))
