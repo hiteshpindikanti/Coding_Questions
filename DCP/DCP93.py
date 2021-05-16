@@ -41,7 +41,6 @@ def get_largest_bst_size(node: Node) -> int:
 #     5       15      17      19
 # 2       7
 # ANSWER = 6
-
 tree = Node(val=20,
             left=Node(val=10,
                       left=Node(val=5,
@@ -63,6 +62,23 @@ tree = Node(val=9,
             left=Node(val=10,
                       left=Node(val=5,
                                 left=Node(2),
+                                right=Node(7)),
+                      right=Node(val=15)),
+            right=Node(val=18,
+                       left=Node(17),
+                       right=Node(19)))
+
+print(get_largest_bst_size(tree))
+
+#                 9
+#         10              18
+#     5       15      17      19
+# 20      7
+# ANSWER = 4
+tree = Node(val=9,
+            left=Node(val=10,
+                      left=Node(val=5,
+                                left=Node(20),
                                 right=Node(7)),
                       right=Node(val=15)),
             right=Node(val=18,
