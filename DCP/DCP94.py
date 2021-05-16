@@ -12,16 +12,6 @@ class Node:
         self.right = right
 
 
-#     10
-# 5       15
-
-tree1 = Node(val=10,
-             left=Node(val=5),
-             right=Node(val=15))
-tree2 = Node(10)
-tree2.left = Node(5)
-tree2.right = Node(15)
-
 max_path_sum_memo = {}
 
 
