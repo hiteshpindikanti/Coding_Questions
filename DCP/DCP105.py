@@ -41,8 +41,8 @@ def debounced(time):
             nonlocal lock
             if not lock:
                 lock = True
-                sleep(time / 1000)
                 func()
+                sleep(time / 1000)
                 lock = False
 
         return wrapper
