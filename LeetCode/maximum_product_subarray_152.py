@@ -22,7 +22,7 @@ class Solution:
             self.memo[(mid + 1, j)] = self.max_product(mid + 1, j)
 
         self.memo[(i, j)] = max(self.memo[(i, mid)], self.memo[(mid + 1, j)], self.span(i, j))
-
+        print(f"memo[{i}, {j}] = {self.memo[(i, j)]} | memo[{i}, {mid}] = {self.memo[(i, mid)]} | memo[{mid+1}, {j}] = {self.memo[(mid+1, j)]}")
         return self.memo[(i, j)]
 
     def span(self, i, j) -> int:
@@ -32,21 +32,21 @@ class Solution:
             return self.nums[i] * self.nums[j]
 
         mid = (i + j) // 2
-        left_product_max = left_product_min = self.nums[i]
-        left_product = 1
-        for index in range(i, mid + 1):
+        left_product = left_product_max = left_product_min = self.nums[mid]
+        for index in range(mid-1, i - 1, -1):
             left_product *= self.nums[index]
             left_product_max = max(left_product_max, left_product)
             left_product_min = min(left_product_min, left_product)
 
-        right_product_max = right_product_min = self.nums[mid + 1]
-        right_product = 1
-        for index in range(mid + 1, j + 1):
+        right_product = right_product_max = right_product_min = self.nums[mid + 1]
+        for index in range(mid + 2, j + 1):
+            right_product *= self.nums[index]
             right_product_max = max(right_product_max, right_product)
             right_product_min = min(right_product_min, right_product)
-
-        return max(left_product_max * right_product_max, left_product_min * right_product_min)
+        result = max(left_product_max * right_product_max, left_product_min * right_product_min)
+        print(f"span({i}, {j})= {result} | {left_product_max}, {right_product_max}, {left_product_min}, {right_product_min}")
+        return result
 
 if __name__ == "__main__":
     sol = Solution()
-    print(sol.maxProduct([1,2,3,4]))
+    print(sol.maxProduct([-1,-2,-9,-6]))
